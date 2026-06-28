@@ -1,0 +1,62 @@
+<nav
+  class="navbar-shell w-full bg-gray-50 px-[clamp(0.5rem,3vw,2.5rem)] py-2 font-mono text-gray-600 transition-colors duration-300 dark:bg-black dark:text-gray-400">
+  <div class="navbar-content">
+    <!-- Theme Toggle -->
+    <button type="button" aria-label="Temayı değiştir" title="Temayı değiştir" (click)="toggleTheme()"
+      class="theme-toggle flex shrink-0 cursor-pointer items-center justify-center rounded-full transition-all duration-300 ease-in-out hover:bg-black/10 hover:text-black dark:hover:bg-white/10 dark:hover:text-white">
+      <!-- Light theme: sun -->
+      <svg class="primary-icon block dark:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
+        fill="currentColor" aria-hidden="true">
+        <path
+          d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z" />
+      </svg>
+
+      <!-- Dark theme: moon -->
+      <svg class="primary-icon hidden dark:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
+        fill="currentColor" aria-hidden="true">
+        <path
+          d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23Z" />
+      </svg>
+    </button>
+
+    <!-- Navigation Links -->
+    <a routerLink="/about" class="hover-line-effect hover:text-black dark:hover:text-white transition-colors">/about</a>
+    <a routerLink="/work" class="hover-line-effect hover:text-black dark:hover:text-white transition-colors">/work</a>
+    <a routerLink="/skills"
+      class="hover-line-effect hover:text-black dark:hover:text-white transition-colors">/skills</a>
+    <a routerLink="/contact"
+      class="hover-line-effect hover:text-black dark:hover:text-white transition-colors">/contact</a>
+
+    <!-- Social Links -->
+    <a href="https://github.com/ozkan-kaya" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+      class="social-link hover-line-effect flex shrink-0 items-center transition-colors hover:text-black dark:hover:text-white">
+      <svg class="primary-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"
+        aria-hidden="true">
+        <path
+          d="M216,104v8a56.06,56.06,0,0,1-48.44,55.47A39.8,39.8,0,0,1,176,192v40a8,8,0,0,1-8,8H104a8,8,0,0,1-8-8V216H72a40,40,0,0,1-40-40A24,24,0,0,0,8,152a8,8,0,0,1,0-16,40,40,0,0,1,40,40,24,24,0,0,0,24,24H96v-8a39.8,39.8,0,0,1,8.44-24.53A56.06,56.06,0,0,1,56,112v-8a58.14,58.14,0,0,1,7.69-28.32A59.78,59.78,0,0,1,69.07,28,8,8,0,0,1,76,24a59.75,59.75,0,0,1,48,24h24a59.75,59.75,0,0,1,48-24,8,8,0,0,1,6.93,4,59.74,59.74,0,0,1,5.37,47.68A58,58,0,0,1,216,104Z" />
+      </svg>
+      <span class="hidden md:inline">GitHub</span>
+      <svg class="external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"
+        aria-hidden="true">
+        <path
+          d="M224,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L196.68,48H152a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-40,24a8,8,0,0,0-8,8v72H48V80h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,80V208a16,16,0,0,0,16,16H176a16,16,0,0,0,16-16V136A8,8,0,0,0,184,128Z" />
+      </svg>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://linkedin.com/in/ozkan-kaya" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+      class="social-link hover-line-effect flex shrink-0 items-center transition-colors hover:text-black dark:hover:text-white">
+      <svg class="primary-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"
+        aria-hidden="true">
+        <path
+          d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24ZM96,176a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0ZM88,96a12,12,0,1,1,12-12A12,12,0,0,1,88,96Zm96,80a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140Z" />
+      </svg>
+      <span class="hidden md:inline">LinkedIn</span>
+      <svg class="external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"
+        aria-hidden="true">
+        <path
+          d="M224,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L196.68,48H152a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-40,24a8,8,0,0,0-8,8v72H48V80h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,80V208a16,16,0,0,0,16,16H176a16,16,0,0,0,16-16V136A8,8,0,0,0,184,128Z" />
+      </svg>
+    </a>
+  </div>
+</nav>

@@ -1,13 +1,26 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>OzkankayaPortfolio</title>
+  <title>Özkan Kaya | Software Engineer</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script>
+    (() => {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+
+      document.documentElement.classList.toggle('dark', isDark);
+      document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+    })();
+  </script>
 </head>
+
 <body>
   <app-root></app-root>
 </body>
+
 </html>
