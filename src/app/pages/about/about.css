@@ -1,0 +1,148 @@
+@reference "../../../styles.css";
+
+@layer components {
+
+  /* ── Scroll wrapper — tall enough to create scroll room ── */
+  .scroll-wrapper {
+    @apply relative w-full;
+    height: 250vh;
+  }
+
+  /* ── Sticky page shell — stays on screen while scrolling ── */
+  .about-page {
+    @apply sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden;
+    padding: 0 6vmin;
+  }
+
+  /* ── Two-column grid ── */
+  .about-grid {
+    @apply grid w-full grid-cols-1 items-center lg:grid-cols-[1fr_1fr];
+    max-width: 90vw;
+    gap: 4vmin;
+  }
+
+  /* ── GIF column ── */
+  .gif-col {
+    @apply flex items-center justify-center w-full;
+  }
+
+  .about-gif {
+    @apply w-full max-w-[450px] rounded-lg border border-gray-200 shadow-sm dark:border-gray-800 dark:shadow-none;
+  }
+
+  /* ── Galaxy (ASCII art) container — scales up and fades ── */
+  .galaxy-container {
+    @apply flex w-full items-center justify-center;
+    opacity: calc(1 - var(--art-progress, 0));
+    transform:
+      scale(calc(1 + var(--art-progress, 0) * 2.5)) translateY(calc(var(--art-progress, 0) * -8vh));
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
+
+  /* ── Bio column — translates up and fades ── */
+  .bio-col {
+    @apply flex flex-col gap-6;
+    opacity: calc(1 - var(--text-progress, 0));
+    transform:
+      perspective(1000px)
+      translateY(calc(var(--text-progress, 0) * -75vh))
+      rotateX(calc(var(--text-progress, 0) * 38deg));
+    will-change: transform, opacity;
+  }
+
+  /* ── Terminal bio lines ── */
+  .greeting-header {
+    @apply font-mono text-3xl font-bold text-gray-900 dark:text-white lg:text-5xl 2xl:text-[3.5rem];
+  }
+
+  .greeting-prefix {
+    @apply text-gray-400 dark:text-gray-600;
+  }
+
+  .bio-lines {
+    @apply flex flex-col gap-4;
+  }
+
+  .bio-line {
+    @apply min-h-[1.5em] font-mono text-lg leading-relaxed text-gray-600 dark:text-gray-300 lg:text-2xl xl:text-3xl 2xl:text-[2rem];
+  }
+
+  .bio-line-prefix {
+    @apply select-none text-gray-400 dark:text-gray-600;
+    margin-right: 0.75ch;
+  }
+
+  /* Dollar-prompt line gets a slightly different accent */
+  .bio-line--dollar {
+    @apply text-gray-400 dark:text-gray-500;
+  }
+
+  .terminal-cursor {
+    display: inline-block;
+    transform: scaleX(1.4);
+    transform-origin: left;
+    animation: location-cursor-blink 1s steps(1, end) infinite;
+  }
+
+  @keyframes location-cursor-blink {
+
+    0%,
+    49% {
+      opacity: 1;
+    }
+
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .terminal-cursor {
+      animation: none;
+      opacity: 1;
+    }
+
+    .galaxy-container,
+    .bio-col {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  /* ── Quick info cards ── */
+  .info-grid {
+    @apply grid grid-cols-2 gap-3;
+  }
+
+  .info-card {
+    @apply flex flex-col gap-0.5 rounded border border-gray-200 px-3 py-2 dark:border-gray-800;
+  }
+
+  .info-label {
+    @apply font-mono text-xs text-gray-400 dark:text-gray-600;
+  }
+
+  .info-value {
+    @apply font-mono text-sm text-gray-700 dark:text-gray-300;
+  }
+
+  /* ── Tech stack ── */
+  .stack-section {
+    @apply flex flex-col gap-3;
+  }
+
+  .stack-heading {
+    @apply font-mono text-xs text-gray-400 dark:text-gray-600;
+  }
+
+  .stack-tags {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .stack-tag {
+    @apply rounded border border-gray-200 px-2.5 py-1 font-mono text-xs text-gray-600 dark:border-gray-800 dark:text-gray-400;
+    @apply transition-colors duration-200 hover:border-gray-400 hover:text-gray-900 dark:hover:border-gray-600 dark:hover:text-white;
+  }
+}

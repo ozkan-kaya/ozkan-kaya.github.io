@@ -1,0 +1,24 @@
+@reference "../../../styles.css";
+
+@layer components {
+  :host {
+    @apply block w-full overflow-hidden;
+  }
+
+  .galaxy {
+    @apply m-0 flex w-full items-center justify-center overflow-hidden;
+  }
+
+  .galaxy-art {
+    @apply m-0 select-none overflow-hidden font-mono leading-[0.82] tracking-[-0.04em] text-gray-500 dark:text-gray-300;
+    font-size: max(1.8vmin, 1.2vw);
+    width: fit-content;
+    height: auto;
+    flex-shrink: 0;
+    text-shadow: 0 0 0.7rem rgb(107 114 128 / 35%);
+  }
+
+  :host-context(.dark) .galaxy-art {
+    text-shadow: 0 0 0.8rem rgb(229 231 235 / 30%);
+  }
+}

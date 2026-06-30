@@ -1,45 +1,132 @@
 @reference "../../../styles.css";
 
 @layer components {
+  /* Shell: default right-aligned */
   .navbar-shell {
-    font-size: clamp(0.6875rem, calc(0.4886rem + 0.9943vw), 1.125rem);
+    position: relative;
+    z-index: 30;
+    display: flex;
+    justify-content: flex-end;
+    padding-inline: clamp(0.5rem, 3vw, 2.5rem);
+    isolation: isolate;
   }
 
+  .progressive-blur {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .progressive-blur > span {
+    position: absolute;
+    inset: 0;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+  }
+
+  .progressive-blur > span:nth-child(1) {
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    mask-image: linear-gradient(to bottom, black 0 22%, transparent 50%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0 22%, transparent 50%);
+  }
+
+  .progressive-blur > span:nth-child(2) {
+    backdrop-filter: saturate(170%) blur(12px);
+    -webkit-backdrop-filter: saturate(170%) blur(12px);
+    mask-image: linear-gradient(to bottom, black 0 38%, transparent 68%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0 38%, transparent 68%);
+  }
+
+  .progressive-blur > span:nth-child(3) {
+    backdrop-filter: saturate(155%) blur(8px);
+    -webkit-backdrop-filter: saturate(155%) blur(8px);
+    mask-image: linear-gradient(to bottom, black 0 52%, transparent 82%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0 52%, transparent 82%);
+  }
+
+  .progressive-blur > span:nth-child(4) {
+    backdrop-filter: saturate(140%) blur(5px);
+    -webkit-backdrop-filter: saturate(140%) blur(5px);
+    mask-image: linear-gradient(to bottom, black 0 66%, transparent 94%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0 66%, transparent 94%);
+  }
+
+  .progressive-blur > span:nth-child(5) {
+    backdrop-filter: saturate(125%) blur(3px);
+    -webkit-backdrop-filter: saturate(125%) blur(3px);
+    mask-image: linear-gradient(to bottom, black 0 78%, rgb(0 0 0 / 60%) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0 78%, rgb(0 0 0 / 60%) 100%);
+  }
+
+  /* Centered layout when content overflows */
+  .navbar-shell[data-centered='true'] {
+    justify-content: center;
+  }
+
+  /* Content: dynamic sizing via JS-calculated variables */
   .navbar-content {
-    @apply mx-auto flex w-max max-w-full flex-nowrap items-center;
-    gap: clamp(0.3125rem, calc(-0.6818rem + 4.9716vw), 2.5rem);
+    --navbar-gap: 3.5rem;
+    --navbar-font-size: 1.5rem;
+    --navbar-toggle-padding: 1rem;
+    --navbar-primary-icon-size: 1.75rem;
+    --navbar-external-icon-size: 1.25rem;
+    --navbar-social-gap: 0.75rem;
+    @apply flex w-max flex-nowrap items-center;
+    position: relative;
+    z-index: 1;
+    gap: var(--navbar-gap);
+    font-size: var(--navbar-font-size);
+    white-space: nowrap;
   }
 
   .theme-toggle {
-    padding: clamp(0.375rem, calc(0.2045rem + 0.8523vw), 0.75rem);
+    padding: var(--navbar-toggle-padding);
   }
 
   .primary-icon {
-    width: clamp(1rem, calc(0.8295rem + 0.8523vw), 1.375rem);
-    height: clamp(1rem, calc(0.8295rem + 0.8523vw), 1.375rem);
+    width: var(--navbar-primary-icon-size);
+    height: var(--navbar-primary-icon-size);
   }
 
   .external-icon {
-    width: clamp(0.6875rem, calc(0.5454rem + 0.7102vw), 1rem);
-    height: clamp(0.6875rem, calc(0.5454rem + 0.7102vw), 1rem);
+    width: var(--navbar-external-icon-size);
+    height: var(--navbar-external-icon-size);
   }
 
   .social-link {
-    gap: clamp(0.2rem, calc(0.0636rem + 0.6818vw), 0.5rem);
+    gap: var(--navbar-social-gap);
   }
 
-  @media (min-width: 64rem) {
-    .navbar-content {
-      margin-left: auto;
-      margin-right: clamp(0rem, calc((80rem - 100vw) * 0.267), 4.272rem);
+  /* Hide labels under 640px */
+  @media (max-width: 639px) {
+    .social-label {
+      display: none;
     }
   }
 
+  /* Hover underline effect */
   .hover-line-effect {
     @apply relative inline-block;
     @apply after:absolute after:-bottom-1 after:left-0 after:w-full;
     @apply after:h-[1px] after:bg-black dark:after:bg-white;
     @apply after:transition-transform after:duration-250 after:ease-out;
     @apply after:origin-center after:scale-x-0 hover:after:scale-x-100;
+  }
+
+  /* Hidden measurement container */
+  .navbar-measurement {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: max-content;
+    max-width: none;
+    margin: 0;
+    visibility: hidden;
+    pointer-events: none;
+    contain: layout style;
   }
 }
