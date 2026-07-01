@@ -1,11 +1,10 @@
 @reference "../../../styles.css";
 
 @layer components {
-
   /* ── Scroll wrapper — tall enough to create scroll room ── */
   .scroll-wrapper {
     @apply relative w-full;
-    height: 250vh;
+    height: 200vh;
   }
 
   /* ── Sticky page shell — stays on screen while scrolling ── */
@@ -33,9 +32,9 @@
   /* ── Galaxy (ASCII art) container — scales up and fades ── */
   .galaxy-container {
     @apply flex w-full items-center justify-center;
-    opacity: calc(1 - var(--art-progress, 0));
-    transform:
-      scale(calc(1 + var(--art-progress, 0) * 2.5)) translateY(calc(var(--art-progress, 0) * -8vh));
+    opacity: calc(1 - var(--scroll-progress, 0));
+    transform: scale(calc(1 + var(--scroll-progress, 0) * 2.5));
+    transform-origin: center;
     will-change: transform, opacity;
     pointer-events: none;
   }
@@ -43,11 +42,9 @@
   /* ── Bio column — translates up and fades ── */
   .bio-col {
     @apply flex flex-col gap-6;
-    opacity: calc(1 - var(--text-progress, 0));
-    transform:
-      perspective(1000px)
-      translateY(calc(var(--text-progress, 0) * -75vh))
-      rotateX(calc(var(--text-progress, 0) * 38deg));
+    opacity: calc(1 - var(--scroll-progress, 0));
+    transform: perspective(1000px) translateY(calc(var(--scroll-progress, 0) * -75vh))
+      rotateX(calc(var(--scroll-progress, 0) * 38deg));
     will-change: transform, opacity;
   }
 
@@ -86,7 +83,6 @@
   }
 
   @keyframes location-cursor-blink {
-
     0%,
     49% {
       opacity: 1;

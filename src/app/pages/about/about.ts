@@ -29,11 +29,7 @@ const BIO_LINES: BioLine[] = [
   {
     prefix: '>',
     text: 'My name is Özkan.',
-    parts: [
-      { text: 'My name is ' },
-      { text: 'Özkan', underline: true },
-      { text: '.' },
-    ],
+    parts: [{ text: 'My name is ' }, { text: 'Özkan', underline: true }, { text: '.' }],
   },
   { prefix: '>', text: 'Recent Computer Engineering graduate, ranked 2nd in my faculty.' },
   {
@@ -74,10 +70,9 @@ export class About implements OnInit, OnDestroy {
   protected readonly showBioLines = signal(false);
   protected readonly bioSequenceComplete = signal(false);
 
-  /** Art fades out slower — progress from 0→1 over the full scroll range */
-  protected readonly artProgress = signal(0);
-  /** Text fades out faster — reaches 1 at ~60% of the scroll range */
-  protected readonly textProgress = signal(0);
+  /** Shared progress keeps the ASCII art and text transitions synchronized. */
+  protected readonly scrollProgress = signal(0);
+  protected readonly galaxyRotationDirection = signal<1 | -1>(1);
 
   private readonly scrollWrapper = viewChild<ElementRef<HTMLElement>>('scrollWrapper');
 
@@ -91,9 +86,11 @@ export class About implements OnInit, OnDestroy {
   private currentProgress = 0;
   private isLoopRunning = false;
   private rafId?: number;
+  private lastScrollY = 0;
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
+      this.lastScrollY = window.scrollY;
       this.intervalId = setInterval(() => {
         this.greetingIndex = (this.greetingIndex + 1) % GREETINGS.length;
         this.currentGreeting.set(GREETINGS[this.greetingIndex]);
@@ -148,8 +145,7 @@ export class About implements OnInit, OnDestroy {
 
     if (Math.abs(diff) < 0.0005) {
       this.currentProgress = this.targetProgress;
-      this.artProgress.set(this.currentProgress);
-      this.textProgress.set(this.currentProgress);
+      this.scrollProgress.set(this.currentProgress);
       this.isLoopRunning = false;
       this.rafId = undefined;
       return;
@@ -157,8 +153,7 @@ export class About implements OnInit, OnDestroy {
 
     // lerp: current = current + diff * ease
     this.currentProgress += diff * 0.18;
-    this.artProgress.set(this.currentProgress);
-    this.textProgress.set(this.currentProgress);
+    this.scrollProgress.set(this.currentProgress);
 
     this.rafId = requestAnimationFrame(this.updateLoop);
   };
@@ -167,12 +162,21 @@ export class About implements OnInit, OnDestroy {
     const wrapper = this.scrollWrapper()?.nativeElement;
     if (!wrapper) return;
 
-    const rect = wrapper.getBoundingClientRect();
     const wrapperHeight = wrapper.offsetHeight;
     const viewportHeight = window.innerHeight;
 
     const scrolled = window.scrollY;
     const scrollableDistance = wrapperHeight - viewportHeight;
+
+    if (scrolled !== this.lastScrollY) {
+      const direction: 1 | -1 = scrolled > this.lastScrollY ? -1 : 1;
+
+      if (direction !== this.galaxyRotationDirection()) {
+        this.ngZone.run(() => this.galaxyRotationDirection.set(direction));
+      }
+
+      this.lastScrollY = scrolled;
+    }
 
     if (scrollableDistance <= 0) {
       this.targetProgress = 0;

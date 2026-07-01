@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  input,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
@@ -12,6 +13,7 @@ import {
 const GALAXY_WIDTH = 58;
 const GALAXY_HEIGHT = 28;
 const GALAXY_CHARS = ' .·:+*oO@';
+const ROTATION_STEP = 0.0525;
 
 @Component({
   selector: 'app-ascii-art',
@@ -20,6 +22,7 @@ const GALAXY_CHARS = ' .·:+*oO@';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AsciiArt implements OnInit, OnDestroy {
+  readonly rotationDirection = input<1 | -1>(1);
   protected readonly galaxyFrame = signal(this.createGalaxyFrame(0));
 
   private readonly platformId = inject(PLATFORM_ID);
@@ -35,7 +38,7 @@ export class AsciiArt implements OnInit, OnDestroy {
 
     let rotation = 0;
     this.animationIntervalId = setInterval(() => {
-      rotation += 0.035;
+      rotation += ROTATION_STEP * this.rotationDirection();
       this.galaxyFrame.set(this.createGalaxyFrame(rotation));
     }, 80);
   }

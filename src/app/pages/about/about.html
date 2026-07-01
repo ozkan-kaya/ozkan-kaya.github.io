@@ -1,13 +1,9 @@
 <div class="scroll-wrapper" #scrollWrapper>
-  <section
-    class="about-page"
-    [style.--art-progress]="artProgress()"
-    [style.--text-progress]="textProgress()"
-  >
+  <section class="about-page" [style.--scroll-progress]="scrollProgress()">
     <div class="about-grid">
       <!-- Left: animated ASCII galaxy -->
       <div class="galaxy-container">
-        <app-ascii-art />
+        <app-ascii-art [rotationDirection]="galaxyRotationDirection()" />
       </div>
 
       <!-- Right: Terminal Bio -->
@@ -27,12 +23,14 @@
               @if (showBioLines()) {
                 <span class="bio-line-prefix" aria-hidden="true">{{ line.prefix }}</span>
                 @if (line.parts) {
-                  @for (part of line.parts; track $index) {<span
-                    [appTextScramble]="part.text"
-                    [class.underline]="part.underline"
-                    [class.underline-offset-4]="part.underline"
-                    (scrambleComplete)="markPartComplete($last)"
-                  ></span>}
+                  @for (part of line.parts; track $index) {
+                    <span
+                      [appTextScramble]="part.text"
+                      [class.underline]="part.underline"
+                      [class.underline-offset-4]="part.underline"
+                      (scrambleComplete)="markPartComplete($last)"
+                    ></span>
+                  }
                 } @else {
                   <span
                     [appTextScramble]="line.text"
